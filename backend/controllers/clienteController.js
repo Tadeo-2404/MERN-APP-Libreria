@@ -1,4 +1,5 @@
 import Cliente from '../models/Cliente.js';
+import generateJWT from '../helpers/generateJWT.js';
 
 const registrar = async (req, res)  => {
     const {correo} = req.body;
@@ -33,7 +34,8 @@ const iniciarSesion = async (req, res) => {
     }
 
     if(await existe.comparePassword(password)) {
-        console.log('bienvenido')
+        generateJWT(existe.id);
+        res.json(generateJWT(existe.id));
     } else {
         const error = new Error("El password no es correcto");
         return res.status(400).json({msg: error.message});
@@ -64,7 +66,8 @@ const comprobarToken = async (req, res) => {}
 const nuevoPassword = async (req, res) => {}
 
 const perfil = (req, res) => {
-    res.json({msg: 'desde perfil'})
+    const {cliente} = req;
+    res.json(cliente)
 }
 
 export {
