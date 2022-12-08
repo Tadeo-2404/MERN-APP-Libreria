@@ -47,5 +47,9 @@ clienteSchema.pre("save", async function(next) {
     this.password = await bcrypt.hash(this.password, salt);
 })
 
+clienteSchema.methods.comparePassword = async function(password) {
+    return bcrypt.compare(password, this.password);
+}
+
 const Cliente = mongoose.model('Cliente', clienteSchema);
 export default Cliente;
