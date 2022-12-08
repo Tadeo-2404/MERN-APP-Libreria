@@ -1,5 +1,6 @@
 import Cliente from '../models/Cliente.js';
 import generateJWT from '../helpers/generateJWT.js';
+import generateToken from '../helpers/generateToken.js';
 
 const registrar = async (req, res)  => {
     const {correo} = req.body;
@@ -61,8 +62,27 @@ const confirmarCuenta = async (req, res) => {
     }
 }
 
-const olvidePassword = async (req, res) => {}
+const olvidePassword = async (req, res) => {
+    const {correo} = req.body; //leeemos el correo 
+    const cliente = await Cliente.findOne({correo: correo}); //buscamos el cliente
+
+    if(!cliente) {
+        const error = new Error("Este correo no esta registrado, intentalo de nuevo");
+        res.status(400).json({msg: error.message});
+    }
+
+    try {
+        cliente.token = generateToken(); //le generamos nuevo token
+        await cliente.save(); //guardamos el cliente
+        res.json({msg: "Se ha enviado un correo con las instrucciones para recuperar tu cuenta"});
+    } catch (e) {
+        const error = new Error(e);
+        res.status(40).json({msg: error.message});
+    }
+}
+
 const comprobarToken = async (req, res) => {}
+
 const nuevoPassword = async (req, res) => {}
 
 const perfil = (req, res) => {
