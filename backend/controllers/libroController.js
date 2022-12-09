@@ -12,20 +12,75 @@ const agregarLibro = async (req, res) => {
     }
 }
 
-const actualizarLibro = async (req, res) => {
-    res.json({msg: "actualizando..."})
-}
+const obtenerLibros = async (req, res) => {
+    const libros = await Libro.find().where('cliente').equals(req.cliente);
+    res.json(libros);
+};
 
 const obtenerLibro = async (req, res) => {
-    res.json({msg: "obteniendo libro..."})
+    const { id } = req.params;
+    const libro = await Libro.findById(id);
+
+    if(libro.cliente._id.toString() != req.cliente._id.toString() ) {
+       return res.json({msg: "Accion no valida"})
+    }
+
+    if(libro) {
+        res.json(libro);
+    }  else {
+        const error = new Error("Libro no encontrado");
+        res.status(404).json({msg: error.message});
+    }
 }
 
-const obtenerLibros = async (req, res) => {
-    res.json({msg: "obtieniendo todos los libros..."})
-} 
+const actualizarLibro = async (req, res) => {
+    const { id } = req.params;
+    const libro = await Libro.findById(id);
+
+    if(!libro) {
+        return res.status(404).json({msg: 'No encontrado'});
+    }
+
+    if(libro.cliente._id.toString() !== req.cliente._id.toString() ) {
+        const error = new Error("Accion no valida");
+        return res.status(400).json({msg: error.message});
+    }
+
+    //actulizar
+    libro.titulo = req.body.titulo || libro.titulo;
+    libro.autor = req.body.autor || libro.autor;
+    libro.editorial = req.body.editorial || libro.editorial;
+
+    try {
+        const libroNuevo = await libro.save();
+        res.json(libroNuevo);
+    } catch (error) {
+        const e = new Error(error);
+        return res.status(400).json({msg: e.message});
+    }
+}
 
 const eliminarLibro = async (req, res) => {
-    res.json({msg: "eliminando libro..."})
+    const { id } = req.params;
+    const libro = await Libro.findById(id);
+
+    if(!libro) {
+        const error = new Error("No encontrado");
+        return res.status(400).json({msg: error.message});
+    }
+
+    if(libro.cliente._id.toString() !== req.cliente._id.toString() ) {
+        const error = new Error("Accion no valida");
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        await libro.deleteOne();
+        res.json({msg: 'Libro Eliminado Correctamente'})
+    } catch (error) {
+        const e = new Error(error);
+        return res.status(400).json({msg: e.message});
+    }
 }
 
 export {
