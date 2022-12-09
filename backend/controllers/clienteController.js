@@ -81,9 +81,38 @@ const olvidePassword = async (req, res) => {
     }
 }
 
-const comprobarToken = async (req, res) => {}
+const comprobarToken = async (req, res) => {
+    const {token} = req.params;
+    const tokenValido = await Cliente.findOne({token: token});
 
-const nuevoPassword = async (req, res) => {}
+    if(tokenValido) {
+        res.json({msg: "Token valido"});
+    } else {
+        const error = new Error("Token no valido, intentalo de nuevo");
+        return res.status(400).json({msg: error.message});
+    }
+}
+
+const nuevoPassword = async (req, res) => {
+    const {token} = req.params;
+    const { password } = req.body;
+    const cliente = await Cliente.findOne({token: token});
+
+    if(!cliente) {
+        const error = new Error("Esta cuenta no existe, intentalo de nuevo");
+        return res.status(400).json({msg: error.message});
+    }
+
+    try {
+        cliente.token = null;
+        cliente.password = password;
+        await cliente.save();
+        res.json({msg: "Tu contraseña ha sido actualizada correctamente"});
+    } catch (error) {
+        const e = new Error(error);
+        return res.status(400).json({msg: e.message});
+    }
+}
 
 const perfil = (req, res) => {
     const {cliente} = req;
