@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import generateISBN from '../helpers/generateISBN.js';
 const { Schema } = mongoose;
 
 const libroSchema = new Schema({
+    ISBN: {
+        type: String,
+        default: generateISBN()
+    },
     titulo: {
         type: String,
         require: true
