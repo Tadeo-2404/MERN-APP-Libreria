@@ -28,7 +28,7 @@ const obtenerLibro = async (req, res) => {
     if(libro) {
         res.json(libro);
     }  else {
-        const error = new Error("Libro no encontrado");
+        const error = new Error("el libro no ha sido encontrado");
         res.status(404).json({msg: error.message});
     }
 }
@@ -38,7 +38,7 @@ const actualizarLibro = async (req, res) => {
     const libro = await Libro.findById(id);
 
     if(!libro) {
-        return res.status(404).json({msg: 'No encontrado'});
+        return res.status(404).json({msg: 'el libro no ha sido encontrado'});
     }
 
     if(libro.cliente._id.toString() !== req.cliente._id.toString() ) {
@@ -50,9 +50,11 @@ const actualizarLibro = async (req, res) => {
     libro.titulo = req.body.titulo || libro.titulo;
     libro.autor = req.body.autor || libro.autor;
     libro.editorial = req.body.editorial || libro.editorial;
+    libro.año = req.body.año || libro.año;
 
     try {
         const libroNuevo = await libro.save();
+        res.json({msg: "el libro ha sido actualizado correctamente"});
         res.json(libroNuevo);
     } catch (error) {
         const e = new Error(error);
@@ -65,7 +67,7 @@ const eliminarLibro = async (req, res) => {
     const libro = await Libro.findById(id);
 
     if(!libro) {
-        const error = new Error("No encontrado");
+        const error = new Error("el libro no ha sido encontrado");
         return res.status(400).json({msg: error.message});
     }
 
@@ -76,7 +78,7 @@ const eliminarLibro = async (req, res) => {
 
     try {
         await libro.deleteOne();
-        res.json({msg: 'Libro Eliminado Correctamente'})
+        res.json({msg: 'el libro se ha eliminado correctamente'})
     } catch (error) {
         const e = new Error(error);
         return res.status(400).json({msg: e.message});
