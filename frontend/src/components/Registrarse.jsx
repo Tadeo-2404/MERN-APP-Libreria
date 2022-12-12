@@ -1,4 +1,6 @@
 import {Link} from 'react-router-dom'
+
+//el usuario crea una nueva cuenta y se le envia un correo para confirmar su cuenta
 const registrarse = () => {
   return (
     <div>

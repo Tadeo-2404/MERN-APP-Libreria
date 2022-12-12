@@ -1,4 +1,6 @@
 import {Link} from 'react-router-dom';
+
+//el usuario coloca su correo y su contraseña para iniciar sesion (necesita confirmar cuenta)
 const iniciarSesion = () => {
   return (
     <div>
