@@ -1,4 +1,4 @@
-
+import {Link} from 'react-router-dom';
 const iniciarSesion = () => {
   return (
     <div>
@@ -9,7 +9,7 @@ const iniciarSesion = () => {
             <label className="grow uppercase" htmlFor="correo">
               correo
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-96 text-xl p-3" 
+            <input className="border-none outline-none hover:shadow-lg w-full text-xl p-3" 
             type="email" 
             placeholder="Introduce tu correo"
             required
@@ -20,7 +20,7 @@ const iniciarSesion = () => {
             <label className="grow uppercase" htmlFor="password">
               contraseña
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-96 text-xl p-3" 
+            <input className="border-none outline-none hover:shadow-lg w-full text-xl p-3" 
             type="password" 
             placeholder="Introduce tu contraseña"
             required
@@ -36,12 +36,21 @@ const iniciarSesion = () => {
         text-white 
         p-3 
         mt-10 
-        w-96 
+        w-full
         hover:transform 
         hover:-translate-y-2 
         hover:bg-gradient-to-r 
         from-blue-500
         to-blue-300"/>
+
+        <div className='text bold mt-6 capitalize underline w-full grid grid-cols-2 text-center gap-x-2'>
+         <div className='hover:text-gray-400'>
+           <Link to="registrarse" preventScrollReset={true}>¿no tienes una cuenta? crea una</Link>
+         </div>
+         <div className='hover:text-gray-400'>
+           <Link to="olvide-password" preventScrollReset={true}>¿olvidaste tu contraseña?</Link>
+         </div>
+        </div>
       </form>
     </div>
   )

@@ -16,7 +16,7 @@ const TemplateLayout = () => {
       <div className='bg-blue-500 p-6 flex flex-col justify-center items-center w-full'>
        <h1 className='text-4xl font-bold uppercase'>libreria</h1>
       </div>
-      <div className='p-4 h-screen flex flex-col justify-center items-center'>
+      <div className='p-8 flex flex-col justify-center items-center'>
       <Outlet/>
       </div>
       <div className='bg-black p-4'>

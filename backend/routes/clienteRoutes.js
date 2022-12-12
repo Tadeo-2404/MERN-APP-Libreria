@@ -4,8 +4,8 @@ const router = express.Router();
 import authenticateToken from '../middleware/auth.js';
 
 //publicas
-router.post('/', registrar);
-router.post('/iniciar-sesion', iniciarSesion);
+router.post('/', iniciarSesion);
+router.post('/registrarse', registrar);
 router.get('/confirmar-cuenta/:token', confirmarCuenta);
 router.post('/olvide-password', olvidePassword);
 router.get('/olvide-password/:token', comprobarToken);
