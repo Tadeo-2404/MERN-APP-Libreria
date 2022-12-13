@@ -47,10 +47,10 @@ const iniciarSesion = () => {
 
         <div className='text bold mt-6 capitalize underline w-full grid grid-cols-2 text-center gap-x-2'>
          <div className='hover:text-gray-400'>
-           <Link to="registrarse" preventScrollReset={true}>¿no tienes una cuenta? crea una</Link>
+           <Link to="/registrarse" preventScrollReset={true}>¿no tienes una cuenta? crea una</Link>
          </div>
          <div className='hover:text-gray-400'>
-           <Link to="olvide-password" preventScrollReset={true}>¿olvidaste tu contraseña?</Link>
+           <Link to="/olvide-password" preventScrollReset={true}>¿olvidaste tu contraseña?</Link>
          </div>
         </div>
       </form>
