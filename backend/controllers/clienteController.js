@@ -14,7 +14,7 @@ const registrar = async (req, res)  => {
     try {
         const cliente = new Cliente(req.body);
         await cliente.save();
-        res.json(cliente);
+        res.json({msg: "Se ha enviado un correo de confirmacion para tu cuenta"});
     } catch (error) {
         console.log(error);
     }
