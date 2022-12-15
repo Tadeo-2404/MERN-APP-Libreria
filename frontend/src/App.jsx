@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<TemplateLayout/>}>
            <Route index element={<IniciarSesion/>} />
            <Route path="registrarse" element={<Registrarse/>} />
-           <Route path="confirmar/:token" element={ <ConfirmarCuenta/>} />
+           <Route path="confirmar-cuenta/:token" element={ <ConfirmarCuenta/>} />
            <Route path="perfil" element={<Perfil/>} />
            <Route path="olvide-password" element={<OlvidePassword/>} />
            <Route path="olvide-password/:token" element={<NuevoPassword/>} />

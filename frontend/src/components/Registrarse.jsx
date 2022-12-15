@@ -9,6 +9,7 @@ const registrarse = () => {
   const [telefono, setTelefono] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
+  const [repetirPassword, setRepetirPassword] = useState("");
   const [error, setError] = useState([]);
   const [exito, setExito] = useState([]);
   const [load, setLoad] = useState(false);
@@ -28,42 +29,90 @@ const registrarse = () => {
 
     if(!nombre || !apellido || !telefono || !correo || !password) {
       setError(error => error.push("Todos los campos son obligatorios"));
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regName.test(nombre)) {
       setError(error => [...error,`"${nombre}" no es nombre valido (gonzalo)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regName.test(apellido)) {
       setError(error => [...error, `"${apellido}" no es apellido valido (gomez)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regTel.test(telefono)) {
       setError(error => [...error, `"${telefono}" no es telefono valido (00-0000-0000)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(regSpaces.test(password)) {
       setError(error => [...error, `"${password}" no debe contener espacios en blanco`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regLower.test(password)) {
       setError(error => [...error, `"${password}" debe contener al menos una letra miniscula (a-z)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regUpper.test(password)) {
       setError(error => [...error, `"${password}" debe contener al menos una letra mayuscula (A-Z)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regNumber.test(password)) {
       setError(error => [...error, `"${password}" debe contener al menos un numero (0-9)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regSpecial.test(password)) {
       setError(error => [...error, `"${password}" debe contener al menos un caracter especial (!@#$%^&*])`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
     if(!regLength.test(password)) {
       setError(error => [...error, `"${password}" debe tener entre 8 y 20 caracteres`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    }
+
+    if(password != repetirPassword) {
+      setError(error => [...error, "Las contraseñas no coinciden"]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
     }
 
       try {
@@ -72,9 +121,16 @@ const registrarse = () => {
         const response = await axios.post(url, {nombre, apellido, correo, password, telefono});
         setLoad(false);
         setExito(exito => [...exito, response.data.msg]);
+        setTimeout(() => {
+          setExito([]);
+        }, 2500);
       } catch (e) {
         console.log(e)
         setError(error => [...error, e.response.data.msg]);
+        setTimeout(() => {
+          setError([]);
+        }, 2500);
+        setLoad(false);
       }
   }
 
@@ -167,6 +223,22 @@ const registrarse = () => {
               autoComplete="on"
               onChange={(event) => setPassword(event.target.value)}
               value={password}
+            />
+          </div>
+          <div className="flex flex-col gap-y-2">
+            <label className="grow uppercase" htmlFor="repetir_password">
+              repetir contraseña
+            </label>
+            <input
+              className="border-none outline-none hover:shadow-lg w-full text-xl p-3"
+              type="password"
+              placeholder="Repite tu contraseña"
+              required
+              min="8"
+              id="repetir_password"
+              autoComplete="on"
+              onChange={(event) => setRepetirPassword(event.target.value)}
+              value={repetirPassword}
             />
           </div>
         </fieldset>

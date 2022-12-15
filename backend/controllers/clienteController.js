@@ -1,6 +1,7 @@
 import Cliente from '../models/Cliente.js';
 import generateJWT from '../helpers/generateJWT.js';
 import generateToken from '../helpers/generateToken.js';
+import emailConfirmar from '../helpers/sendEmailConfirmar.js';
 
 const registrar = async (req, res)  => {
     const {correo} = req.body;
@@ -14,6 +15,7 @@ const registrar = async (req, res)  => {
     try {
         const cliente = new Cliente(req.body);
         await cliente.save();
+        await emailConfirmar(cliente);
         res.json({msg: "Se ha enviado un correo de confirmacion para tu cuenta"});
     } catch (error) {
         console.log(error);
