@@ -7,10 +7,12 @@ import OlvidePassword from "./components/OlvidePassword"
 import NuevoPassword from "./components/NuevoPassword"
 import Perfil from "./components/Perfil";
 import Error404 from "./components/Error404";
+import ContextProvider from "./context/ContextProvider";
 function App() {
 
   return (
     <BrowserRouter>
+    <ContextProvider>
       <Routes>
         <Route path="/" element={<TemplateLayout/>}>
            <Route index element={<IniciarSesion/>} />
@@ -22,6 +24,7 @@ function App() {
            <Route path="*" element={<Error404/>} />
         </Route>
       </Routes>
+    </ContextProvider>
     </BrowserRouter>
   )
 }

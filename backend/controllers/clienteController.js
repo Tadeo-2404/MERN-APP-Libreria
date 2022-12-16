@@ -32,12 +32,13 @@ const iniciarSesion = async (req, res) => {
         return res.status(400).json({msg: error.message});
     }
 
-    if(!existe.confirmado) {
-        const error = new Error("Esta cuenta no ha sido confirmada");
-        return res.status(400).json({msg: error.message});
-    }
-
     if(await existe.comparePassword(password)) {
+
+        if(!existe.confirmado) {
+            const error = new Error("Esta cuenta no ha sido confirmada");
+            return res.status(400).json({msg: error.message});
+        }
+        
         generateJWT(existe.id);
         res.json(generateJWT(existe.id));
     } else {
