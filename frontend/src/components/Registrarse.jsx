@@ -14,12 +14,21 @@ const registrarse = () => {
   const [exito, setExito] = useState([]);
   const [load, setLoad] = useState(false);
 
+  const resetForm = () => {
+    setNombre("");
+    setApellido("");
+    setCorreo("");
+    setTelefono("");
+    setPassword("");
+    setRepetirPassword("");
+  }
+
   const handdleSubmit = async (event) => {
     setError([]);
     event.preventDefault();
     const regName = /^[a-zA-Z ]{2,30}$/;
     const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const regTel = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/
+    const regTel = /^[(]{0,1}[0-9]{2}[)]{0,1}[-\s\.]{0,1}[0-9]{4}[-\s\.]{0,1}[0-9]{4}$/;
     const regSpaces = /^(?=.*\s)/;
     const regLower = /^(?=.*[a-z])/;
     const regUpper = /^(?=.*[A-Z]).*$/;
@@ -53,6 +62,14 @@ const registrarse = () => {
 
     if(!regTel.test(telefono)) {
       setError(error => [...error, `"${telefono}" no es telefono valido (00-0000-0000)`]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    }
+
+    if(!regEmail.test(correo)) {
+      setError(error => [...error, `"${correo}" no es correo valido (correo@correo.com))`]);
       setTimeout(() => {
         setError([]);
       }, 2500);
@@ -123,6 +140,7 @@ const registrarse = () => {
         setExito(exito => [...exito, response.data.msg]);
         setTimeout(() => {
           setExito([]);
+          resetForm();
         }, 2500);
       } catch (e) {
         console.log(e)

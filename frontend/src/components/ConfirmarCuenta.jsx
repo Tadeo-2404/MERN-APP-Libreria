@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ConfirmarCuenta = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [exito, setExito] = useState("");
   const [boolError, setBolError] = useState(false);
@@ -16,9 +17,15 @@ const ConfirmarCuenta = () => {
         const response = await axios.get(url);
         setExito(response.data.msg);
         setBolExito(true);
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       } catch (e) {
         setError(e.response.data.msg);
         setBolError(true);
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       }
     };
     fetchData();

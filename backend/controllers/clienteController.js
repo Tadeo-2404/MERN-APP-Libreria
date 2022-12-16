@@ -1,6 +1,7 @@
 import Cliente from '../models/Cliente.js';
 import generateJWT from '../helpers/generateJWT.js';
 import generateToken from '../helpers/generateToken.js';
+import emailRecuperar from '../helpers/sendEmailRecuperar.js';
 import emailConfirmar from '../helpers/sendEmailConfirmar.js';
 
 const registrar = async (req, res)  => {
@@ -76,7 +77,8 @@ const olvidePassword = async (req, res) => {
     try {
         cliente.token = generateToken(); //le generamos nuevo token
         await cliente.save(); //guardamos el cliente
-        res.json({msg: "Se ha enviado un correo con las instrucciones para recuperar tu cuenta"});
+        emailRecuperar(cliente);
+        res.json({msg: "Se ha enviado un correo con las instrucciones para recuperar tu contraseña"});
     } catch (e) {
         const error = new Error(e);
         res.status(40).json({msg: error.message});
@@ -88,9 +90,9 @@ const comprobarToken = async (req, res) => {
     const tokenValido = await Cliente.findOne({token: token});
 
     if(tokenValido) {
-        res.json({msg: "Token valido"});
+        res.json({msg: "Introduce tu nueva contraseña"});
     } else {
-        const error = new Error("Token no valido, intentalo de nuevo");
+        const error = new Error("Algo ha salido mal, intentalo de nuevo");
         return res.status(400).json({msg: error.message});
     }
 }
