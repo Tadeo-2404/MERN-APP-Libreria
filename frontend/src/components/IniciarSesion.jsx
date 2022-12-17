@@ -106,6 +106,7 @@ const iniciarSesion = () => {
       const {data} = await axios.post(url, {correo, password});
       setLoad(false);
       localStorage.setItem('token', data); //guardando token en localStorage
+      navigate("/admin");
     } catch (e) {
       console.log(e)
       setError(error => [...error, e.response.data.msg]);
