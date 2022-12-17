@@ -7,7 +7,7 @@ import { ClipLoader } from "react-spinners";
 //el usuario coloca su correo y su contraseña para iniciar sesion (necesita confirmar cuenta)
 const iniciarSesion = () => {
   //importamos el context para leerlo globalmente
-  const {auth} = useContext(Context);
+  const {setAuth} = useContext(Context);
 
   //imporamos useNavigate para redireccionar
   const navigate = useNavigate();
@@ -106,6 +106,8 @@ const iniciarSesion = () => {
       const {data} = await axios.post(url, {correo, password});
       setLoad(false);
       localStorage.setItem('token', data); //guardando token en localStorage
+      setAuth(data);
+      resetForm();
       navigate("/admin");
     } catch (e) {
       console.log(e)

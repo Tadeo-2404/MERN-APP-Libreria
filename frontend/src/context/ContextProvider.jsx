@@ -33,11 +33,15 @@ const ContextProvider = ({children}) => {
       setLoading(false);
     }
     authUser();
-  }, [])
-  
+  }, []);
 
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setAuth({});
+  }
+  
   return (
-    <Context.Provider value={{auth, setAuth, loading}}>
+    <Context.Provider value={{auth, setAuth, loading, logOut}}>
         {children}
     </Context.Provider>
   )

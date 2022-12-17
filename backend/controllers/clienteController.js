@@ -39,8 +39,14 @@ const iniciarSesion = async (req, res) => {
             return res.status(400).json({msg: error.message});
         }
         
-        generateJWT(existe.id);
-        res.json(generateJWT(existe.id));
+        res.json({
+            _id: existe._id,
+            nombre: existe.nombre,
+            apellido: existe.apellido,
+            correo: existe.correo,
+            telefono: existe.telefono,
+            token: generateJWT(existe.id)
+        });
     } else {
         const error = new Error("El password no es correcto");
         return res.status(400).json({msg: error.message});
