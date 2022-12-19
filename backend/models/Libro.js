@@ -19,7 +19,7 @@ const libroSchema = new Schema({
         type: String,
         require: true
     },
-    año: {
+    fecha: {
         type: String,
         require: true
     },

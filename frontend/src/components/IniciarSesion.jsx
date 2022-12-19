@@ -121,14 +121,14 @@ const iniciarSesion = () => {
 
   return (
     <div>
-      <form action="/" className="bg-gray-200 p-12 w-full shadow-2xl" onSubmit={handdleSubmit}>
-        <legend className="uppercase font-bold text-center text-blue-500 text-4xl mb-10">iniciar sesion</legend>
+      <form action="/" className="bg-gray-200 shadow-2xl w-full sm:p-8 md:p-8 lg:p-8 xl:p-8 2xl:p-12" onSubmit={handdleSubmit}>
+        <legend className="uppercase font-bold text-center text-blue-500 sm:text-2xl sm:mb-8 md:text-3xl md:mb-8 lg:text-4xl lg:mb-8 xl:text-5xl xl:mb-8 2xl:text-5xl 2xl:mb-12">iniciar sesion</legend>
         <fieldset className="flex flex-col gap-8">  
           <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="correo">
+            <label className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl" htmlFor="correo">
               correo
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-xl p-3" 
+            <input className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4" 
             type="email" 
             placeholder="Introduce tu correo"
             required
@@ -137,11 +137,12 @@ const iniciarSesion = () => {
             onChange={(event) => setCorreo(event.target.value)}
             />
           </div>
+
           <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="password">
+            <label className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl" htmlFor="password">
               contraseña
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-xl p-3" 
+            <input className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4" 
             type="password" 
             placeholder="Introduce tu contraseña"
             required
@@ -166,10 +167,16 @@ const iniciarSesion = () => {
 
         <input type="submit" 
         value="iniciar sesion"
-        className="uppercase 
+        className="uppercase
+        p-2
+        sm:text-sm
+        md:text-base
+        lg:text-lg
+        xl:text-xl
+        2xl:text-xl
+        2xl:p-3
         bg-blue-500 
         text-white 
-        p-3 
         mt-10 
         w-full
         hover:transform 
@@ -182,7 +189,7 @@ const iniciarSesion = () => {
           <div className="flex flex-col justify-center items-center w-full">
             {error.map((e) => (
               <div
-                className="bg-red-500 text-center text-white font-bold uppercase p-3 mt-3 w-full"
+                className="bg-red-500 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
                 key={e}
               >
                 <p>{e}</p>
@@ -195,7 +202,7 @@ const iniciarSesion = () => {
           <div className="flex flex-col justify-center items-center w-full">
             {exito.map((e) => (
               <div
-                className="bg-green-600 text-center text-white font-bold uppercase p-3 mt-3 w-full"
+              className="bg-green-600 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
                 key={e}
               >
                 <p>{e}</p>
@@ -204,7 +211,7 @@ const iniciarSesion = () => {
           </div>
         )}
 
-        <div className='text bold mt-6 capitalize underline w-full grid grid-cols-2 text-center gap-x-2'>
+        <div className='text-center mt-6 capitalize underline w-full grid grid-row-2 sm:gap-y-6 sm:text-sm md:gap-y-6 md:text-base lg:gap-y-8 lg:text-lg xl:text-xl xl:gap-y-6 2xl:text-xl 2xl:gap-y-8'>
          <div className='hover:text-gray-400'>
            <Link to="/registrarse" preventScrollReset={true}>¿no tienes una cuenta? crea una</Link>
          </div>

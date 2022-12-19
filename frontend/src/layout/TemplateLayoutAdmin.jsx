@@ -32,7 +32,7 @@ const TemplateLayoutAdmin = () => {
         </div>
       </div>
 
-      <div className="p-8 flex flex-col justify-center items-center h-screen">
+      <div className="p-8 flex flex-col justify-center items-center">
         {auth?._id ? <Outlet /> : navigate("/")}
       </div>
       <div className="bg-black p-4">
