@@ -75,6 +75,7 @@ const olvidePassword = () => {
               type="email"
               placeholder="Introduce tu correo"
               required
+              autoComplete="on"
               id="correo"
               onChange={(event) => setCorreo(event.target.value)}
               value={correo}

@@ -9,15 +9,15 @@ const iniciarSesion = () => {
   //importamos el context para leerlo globalmente
   const {setAuth} = useContext(Context);
 
-  //imporamos useNavigate para redireccionar
-  const navigate = useNavigate();
-
   //variables formulario
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState([]);
   const [exito, setExito] = useState([]);
   const [load, setLoad] = useState(false);
+
+  //redireccion
+  const navigate = useNavigate();
 
   //regex para validar correo y passsword
   const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -105,7 +105,7 @@ const iniciarSesion = () => {
       const url = "http://localhost:4000/api/clientes/";
       const {data} = await axios.post(url, {correo, password});
       setLoad(false);
-      localStorage.setItem('token', data); //guardando token en localStorage
+      localStorage.setItem('token', data.token); //guardando token en localStorage
       setAuth(data);
       resetForm();
       navigate("/admin");
@@ -133,6 +133,7 @@ const iniciarSesion = () => {
             placeholder="Introduce tu correo"
             required
             id="correo"
+            autoComplete="on"
             value={correo}
             onChange={(event) => setCorreo(event.target.value)}
             />
@@ -148,6 +149,7 @@ const iniciarSesion = () => {
             required
             min="8"
             id="password"
+            autoComplete="on"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             />

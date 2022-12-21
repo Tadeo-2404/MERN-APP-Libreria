@@ -1,76 +1,170 @@
 import { useState } from "react";
+import axios from "axios";
+import { ClipLoader } from "react-spinners";
 
 const FormularioLibros = () => {
-    const [titulo, setTitulo] =  useState('');
-    const [autor, setAutor] = useState('');
-    const [editorial, setEditorial] = useState('');
-    const [fecha, setFecha] = useState(Date.now());
+  const [titulo, setTitulo] = useState("");
+  const [autor, setAutor] = useState("");
+  const [editorial, setEditorial] = useState("");
+  const [fecha, setFecha] = useState("");
+
+  //VALIDACIONES
+  const [error, setError] = useState([]);
+  const [exito, setExito] = useState([]);
+  const [load, setLoad] = useState(false);
+
+  const resetForm = () => {
+    setTitulo("");
+    setAutor("");
+    setEditorial("");
+    setFecha("");
+  };
+
+  const handdleSubmit = async (event) => {
+    event.preventDefault();
+    const regValidation = /^[a-zA-Z ]{2,30}$/;
+
+    if (!titulo || !autor || !editorial || !fecha) {
+      setError((error) => error.push("Todos los campos son obligatorios"));
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    }
+
+    if (!regValidation.test(titulo)) {
+      setError((error) => [
+        ...error,
+        `"${titulo}" no es titulo valido`,
+      ]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    } 
+
+    if (!regValidation.test(autor)) {
+      setError((error) => [
+        ...error,
+        `"${autor}" no es un autor valido`,
+      ]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    } 
+
+    if (!regValidation.test(editorial)) {
+      setError((error) => [
+        ...error,
+        `"${editorial}" no es un editorial valido`,
+      ]);
+      setTimeout(() => {
+        setError([]);
+      }, 2500);
+      return;
+    } 
+  }
 
   return (
     <>
-      <form action="/" className="bg-gray-200 p-12 w-full shadow-2xl">
-        <legend className="uppercase font-bold text-center text-blue-500 text-2xl mb-8">Agregar Libros</legend>
+      <form
+        action="/admin"
+        className="bg-gray-200 shadow-2xl w-full sm:p-8 md:p-8 lg:p-8 xl:p-8 2xl:p-12"
+        onSubmit={handdleSubmit}
+      >
+        <legend className="uppercase font-bold text-center text-blue-500 sm:text-2xl sm:mb-8 md:text-3xl md:mb-8 lg:text-4xl lg:mb-8 xl:text-5xl xl:mb-8 2xl:text-5xl 2xl:mb-12">
+          Agregar Libros
+        </legend>
         <fieldset className="flex flex-col gap-8">
-        <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="titulo">
+          <div className="flex flex-col gap-y-2">
+            <label
+              className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl"
+              htmlFor="titulo"
+            >
               titulo
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-lg p-2" 
-            type="text" 
-            placeholder="Titulo del Libro"
-            required
-            id="titulo"
-            value={titulo}
-            onChange={(event) => setTitulo(event.target.value)}
+            <input
+              className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4"
+              type="text"
+              placeholder="Titulo del Libro"
+              required
+              id="titulo"
+              value={titulo}
+              onChange={(event) => setTitulo(event.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="autor">
+            <label
+              className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl"
+              htmlFor="autor"
+            >
               autor
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-lg p-2" 
-            type="text" 
-            placeholder="Autor del Libro"
-            required
-            id="autor"
-            value={autor}
-            onChange={(event) => setAutor(event.target.value)}
+            <input
+              className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4"
+              type="text"
+              placeholder="Autor del Libro"
+              required
+              id="autor"
+              value={autor}
+              onChange={(event) => setAutor(event.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="editorial">
+            <label
+              className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl"
+              htmlFor="editorial"
+            >
               editorial
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-lg p-2" 
-            type="text" 
-            placeholder="Editorial del Libro"
-            required
-            id="editorial"
-            value={editorial}
-            onChange={(event) => setEditorial(event.target.value)}
+            <input
+              className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4"
+              type="text"
+              placeholder="Editorial del Libro"
+              required
+              id="editorial"
+              value={editorial}
+              onChange={(event) => setEditorial(event.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-y-2">
-            <label className="grow uppercase" htmlFor="fecha">
+            <label
+              className="grow uppercase sm:text-sm md:text-base lg:text-lg xl:text-xl 2xl:text-xl"
+              htmlFor="fecha"
+            >
               Fecha
             </label>
-            <input className="border-none outline-none hover:shadow-lg w-full text-lg p-2" 
-            type="date" 
-            placeholder="Fecha del Libro"
-            required
-            id="fecha"
-            value={fecha}
-            onChange={(event) => setFecha(event.target.value)}
+            <input
+              className="border-none outline-none hover:shadow-lg w-full sm:text-sm sm:p-2 md:text-base md:p-2 lg:text-lg lg:p-2 xl:p-2 xl:text-xl 2xl:text-xl 2xl:p-4"
+              type="date"
+              placeholder="Fecha del Libro"
+              required
+              id="fecha"
+              value={fecha}
+              onChange={(event) => setFecha(event.target.value)}
             />
           </div>
         </fieldset>
 
-        <input type="submit" 
-        value="agregar"
-        className="uppercase 
+                {load && (
+          <div className="flex justify-center mt-10">
+            <ClipLoader
+              color="blue"
+              loading="true"
+              size={100}
+              aria-label="Loading Spinner"
+            />
+          </div>
+        )}
+
+        <input
+          type="submit"
+          value="agregar"
+          className="uppercase 
         bg-blue-500 
         text-white 
         p-3 
@@ -80,7 +174,34 @@ const FormularioLibros = () => {
         hover:-translate-y-2 
         hover:bg-gradient-to-r 
         from-blue-500
-        to-blue-300"/>
+        to-blue-300"
+        />
+
+               {error.length > 0 && (
+          <div className="flex flex-col justify-center items-center w-full">
+            {error.map((e) => (
+              <div
+                className="bg-red-500 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
+                key={e}
+              >
+                <p>{e}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {exito.length > 0 && (
+          <div className="flex flex-col justify-center items-center w-full">
+            {exito.map((e) => (
+              <div
+              className="bg-green-600 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
+                key={e}
+              >
+                <p>{e}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </form>
     </>
   );

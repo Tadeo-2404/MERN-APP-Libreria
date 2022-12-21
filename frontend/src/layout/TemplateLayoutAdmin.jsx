@@ -1,13 +1,12 @@
 import { useState, useEffect, useContext } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, Navigate, Link } from 'react-router-dom'
 import { Context } from '../context/ContextProvider';
 import { RiLogoutBoxRLine, RiUserLine, RiBookLine } from "react-icons/ri";
 
 const TemplateLayoutAdmin = () => {
-    const navigate = useNavigate();
     const [fecha, setFecha] = useState(0);
-    const {auth, loading, logOut} = useContext(Context);
-
+    const {auth, logOut} = useContext(Context);
+    
     useEffect(() => {
       const updateDate = () => {
         setFecha(new Date().getFullYear())
@@ -19,9 +18,11 @@ const TemplateLayoutAdmin = () => {
     <>
       <div className="bg-blue-500 p-6 flex justify-between items-center w-full">
         <div>
+          <Link to="/admin">
             <h1 className='uppercase font-bold text-4xl text-white'>
                 libreria
             </h1>
+          </Link>
         </div>
         <div>
           <nav className="flex justify-around w-full gap-x-8">
@@ -33,7 +34,7 @@ const TemplateLayoutAdmin = () => {
       </div>
 
       <div className="p-8 flex flex-col justify-center items-center">
-        {auth?._id ? <Outlet /> : navigate("/")}
+        {auth._id == undefined ? <Navigate to="/" /> : <Outlet />}
       </div>
       <div className="bg-black p-4">
         <div>

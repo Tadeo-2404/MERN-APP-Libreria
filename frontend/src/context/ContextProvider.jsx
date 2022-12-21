@@ -10,11 +10,11 @@ const ContextProvider = ({children}) => {
   useEffect(() => {
     const authUser = async () => {
       const token = localStorage.getItem('token'); //obtenemos el item de local storage
-      if(!token) {
+      if(token == null) {
         setLoading(false);
         return;
       };
-
+      
       const configuration = {
         headers: {
           "Content-Type": "application/json", //indicamos que es de tipo JSON
@@ -27,8 +27,7 @@ const ContextProvider = ({children}) => {
         const {data} = await axios.get(url, configuration);
         setAuth(data);
       } catch (error) {
-        console.log(error.response.data.message)
-        setAuth({});
+        console.log(error)
       }
       setLoading(false);
     }

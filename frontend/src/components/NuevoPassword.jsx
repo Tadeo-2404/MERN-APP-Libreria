@@ -168,6 +168,7 @@ const nuevoPassword = () => {
                   placeholder="Introduce tu contraseña"
                   required
                   min="8"
+                  autoComplete="on"
                   id="password"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
@@ -184,6 +185,7 @@ const nuevoPassword = () => {
                   placeholder="Repite tu contraseña"
                   required
                   min="8"
+                  autoComplete="on"
                   id="repetir_password"
                   value={repetirPassword}
                   onChange={(event) => setRepetirPassword(event.target.value)}
