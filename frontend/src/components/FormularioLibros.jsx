@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import LibrosContext from "../context/ContextProviderLibros";
 
 const FormularioLibros = () => {
+  const {libros, storeLibros} = useContext(LibrosContext);
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [editorial, setEditorial] = useState("");
@@ -64,6 +66,13 @@ const FormularioLibros = () => {
       }, 2500);
       return;
     } 
+
+    storeLibros({titulo, autor, editorial, fecha})
+    setExito((exito) => [...exito, "Libro agregado correctamente"]);
+    setTimeout(() => {
+      setExito([]);
+      resetForm();
+    }, 2500);
   }
 
   return (
@@ -191,7 +200,7 @@ const FormularioLibros = () => {
         )}
 
         {exito.length > 0 && (
-          <div className="flex flex-col justify-center items-center w-full">
+          <div className="flex flex-col justify-center items-center w-full text-center">
             {exito.map((e) => (
               <div
               className="bg-green-600 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
