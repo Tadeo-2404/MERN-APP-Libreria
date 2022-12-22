@@ -24,7 +24,7 @@ const FormularioLibros = () => {
 
   const handdleSubmit = async (event) => {
     event.preventDefault();
-    const regValidation = /^[a-zA-Z ]{2,30}$/;
+    const regValidation = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
 
     if (!titulo || !autor || !editorial || !fecha) {
       setError((error) => error.push("Todos los campos son obligatorios"));

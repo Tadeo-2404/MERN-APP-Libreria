@@ -29,5 +29,15 @@ const libroSchema = new Schema({
     }
 });
 
+libroSchema.pre("save", async function(next) {
+
+    if(!this.isModified("ISBN")) {
+        next();
+    }
+
+   const nuevoISBN = await generateISBN();
+   this.ISBN =  nuevoISBN;
+})
+
 const Libro = mongoose.model('Libro', libroSchema);
 export default Libro;
