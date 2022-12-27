@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import axios from "axios";
+import { useState, useContext, useEffect } from "react";
 import { ClipLoader } from "react-spinners";
 import LibrosContext from "../context/ContextProviderLibros";
 
 const FormularioLibros = () => {
-  const {libros, storeLibros} = useContext(LibrosContext);
+  const {libros, libro, storeLibros} = useContext(LibrosContext);
+  const [id, setID] = useState(null);
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [editorial, setEditorial] = useState("");
@@ -15,7 +15,31 @@ const FormularioLibros = () => {
   const [exito, setExito] = useState([]);
   const [load, setLoad] = useState(false);
 
+  useEffect(() => {
+    if(libro?._id) {
+      setID(libro._id);
+    }
+
+    if(libro?.titulo) {
+      setTitulo(libro.titulo);
+    }
+
+    if(libro?.autor) {
+      setAutor(libro.autor);
+    }
+
+    if(libro?.editorial) {
+      setEditorial(libro.editorial);
+    }
+
+    if(libro?.fecha) {
+      setFecha(libro.fecha);
+    }
+  }, [libro])
+  
+
   const resetForm = () => {
+    setID(null);
     setTitulo("");
     setAutor("");
     setEditorial("");
@@ -24,7 +48,7 @@ const FormularioLibros = () => {
 
   const handdleSubmit = async (event) => {
     event.preventDefault();
-    const regValidation = /^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$/;
+    const regValidation = /^[A-Za-z0-9 ]+$/
 
     if (!titulo || !autor || !editorial || !fecha) {
       setError((error) => error.push("Todos los campos son obligatorios"));
@@ -67,7 +91,7 @@ const FormularioLibros = () => {
       return;
     } 
 
-    storeLibros({titulo, autor, editorial, fecha})
+    storeLibros({titulo, autor, editorial, fecha, id})
     setExito((exito) => [...exito, "Libro agregado correctamente"]);
     setTimeout(() => {
       setExito([]);
@@ -172,7 +196,7 @@ const FormularioLibros = () => {
 
         <input
           type="submit"
-          value="agregar"
+          value={id ? "Actualizar Libro" : "Agregar Libro"}
           className="uppercase 
         bg-blue-500 
         text-white 
@@ -186,8 +210,8 @@ const FormularioLibros = () => {
         to-blue-300"
         />
 
-               {error.length > 0 && (
-          <div className="flex flex-col justify-center items-center w-full">
+          {error.length > 0 && (
+          <div className="flex flex-col justify-center items-center w-full text-center">
             {error.map((e) => (
               <div
                 className="bg-red-500 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"

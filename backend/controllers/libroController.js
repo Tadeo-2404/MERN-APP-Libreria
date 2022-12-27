@@ -54,7 +54,6 @@ const actualizarLibro = async (req, res) => {
 
     try {
         const libroNuevo = await libro.save();
-        res.json({msg: "el libro ha sido actualizado correctamente"});
         res.json(libroNuevo);
     } catch (error) {
         const e = new Error(error);

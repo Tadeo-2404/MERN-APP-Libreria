@@ -5,7 +5,7 @@ import ListaLibros from "./ListaLibros";
 
 const Admin = () => {
   const { auth, loading } = useContext(Context);
-  const [btn, setBtn] = useState(false);
+  const [btn, setBtn] = useState(true);
 
   const showBtn = () => {
     setBtn(!btn);

@@ -4,10 +4,7 @@ import Libro from "./Libro";
 
 const ListaLibros = () => {
   const { libros } = useContext(LibrosContext);
-
-  console.log(typeof libros);
-  console.log(libros)
-
+  
   return (
     <div>
       {libros.length ? (
@@ -23,7 +20,7 @@ const ListaLibros = () => {
         <div className="flex flex-col gap-y-10 p-4 overflow-y-auto">
         {libros.map((libro) => {
         return (
-            <Libro key={libro.ISBN} libro={libro}/>
+            <Libro key={libro._id} libro={libro}/>
         );
       })}
         </div>
