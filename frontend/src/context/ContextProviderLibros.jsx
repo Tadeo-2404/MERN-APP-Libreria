@@ -60,10 +60,31 @@ const ContextProviderLibros = ({children}) => {
     const editLibro = (libro) => {
         setLibro(libro)
     }
+
+    const deleteLibro = async (libro) => {
+        const token = localStorage.getItem('token');
+        const configuration = {
+            headers: {
+                "Content-Type": "application/json", //indicamos que es de tipo JSON
+                Authorization: `Bearer ${token}` //usamos bearer token
+            }
+        }
+        
+        const authDelete = confirm(`Deseas eliminar ${libro.titulo}?`);
+        if(authDelete) {
+            try {
+                const {data} = await axios.delete(`http://localhost:4000/api/libros/${libro._id}`, configuration);
+                const updated = libros.filter(lib => lib._id != libro._id)
+                setLibros(updated);
+            } catch (error) {
+                console.log(error);
+            }
+        } 
+    }
     
 
     return (
-        <LibrosContext.Provider value={{libros, storeLibros, editLibro, libro}}>
+        <LibrosContext.Provider value={{libros, storeLibros, editLibro, deleteLibro ,libro}}>
             {children}
         </LibrosContext.Provider>
     )
