@@ -130,6 +130,34 @@ const perfil = (req, res) => {
     res.json(cliente)
 }
 
+const actualizarPerfil = async (req, res) => {
+    const cliente = await Cliente.findById(req.params.id)
+    if(!cliente) {
+        const error = new Error("Cliente no encontrado");
+        return res.status(400).json({msg: error.message})
+    }
+
+    const {correo} = req.body;
+    if(cliente.correo !==  req.body.correo) {
+        const exist = await Cliente.findOne({correo: correo});
+        if(exist) {
+            const error = new Error("Este correo ya esta registrado");
+            return res.status(400).json({msg: error.message})
+        }
+    }
+
+    try {
+        cliente.nombre = req.body.nombre;
+        cliente.apellido = req.body.apellido;
+        cliente.telefono = req.body.telefono;
+        cliente.correo = req.body.correo;
+        const nuevoCliente = await cliente.save();
+        res.json(nuevoCliente);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 export {
     registrar,
     perfil,
@@ -137,5 +165,6 @@ export {
     confirmarCuenta,
     olvidePassword,
     nuevoPassword,
-    comprobarToken
+    comprobarToken,
+    actualizarPerfil
 }

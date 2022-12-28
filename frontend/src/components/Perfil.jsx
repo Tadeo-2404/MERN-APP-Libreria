@@ -2,7 +2,7 @@ import NavPerfil from "./NavPerfil";
 import { Context } from "../context/ContextProvider";
 import { useContext, useEffect, useState } from "react";
 const Perfil = () => {
-  const { auth } = useContext(Context);
+  const { auth, updateProfile } = useContext(Context);
   const [perfil, setperfil] = useState({});
   const [error, setError] = useState([]);
   const [exito, setExito] = useState([]);
@@ -10,9 +10,8 @@ const Perfil = () => {
   useEffect(() => {
     setperfil(auth);
   }, [auth]);
-  console.log(perfil);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { nombre, apellido, telefono, correo } = perfil;
     event.preventDefault();
@@ -48,6 +47,12 @@ const Perfil = () => {
       }, 2500);
       return;
     }
+
+    const actualizado = await updateProfile(perfil);
+    setExito((exito) => [...exito, actualizado.msg]);
+    setTimeout(() => {
+      setExito([]);
+    }, 2500);
   };
 
   return (
@@ -192,14 +197,9 @@ const Perfil = () => {
 
             {exito.length > 0 && (
               <div className="flex flex-col justify-center items-center w-full">
-                {exito.map((e) => (
-                  <div
-                    className="bg-green-600 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4"
-                    key={e}
-                  >
-                    <p>{e}</p>
-                  </div>
-                ))}
+                <div className="bg-green-600 text-white font-bold uppercase p-2 mt-3 w-full sm:text-sm md:text-base lg:text-lg xl:text-xl xl:p-4 2xl:text-xl 2xl:p-4">
+                  <p>{exito}</p>
+                </div>
               </div>
             )}
           </form>
