@@ -26,7 +26,7 @@ const TemplateLayoutAdmin = () => {
         </div>
         <div>
           <nav className="flex justify-around w-full gap-x-8">
-            <Link to="/admin/mis-libros">
+            <Link to="/admin">
                <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1">mis libros    <RiBookLine/></button>
             </Link>
 
