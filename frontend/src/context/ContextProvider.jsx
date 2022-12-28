@@ -66,9 +66,39 @@ const ContextProvider = ({children}) => {
       console.log(error)
     }
   }
+
+  const updatePassword = async (credentials) => {
+    const token = localStorage.getItem('token'); //obtenemos el item de local storage
+    if(token == null) {
+      setLoading(false);
+      return;
+    };
+    
+    const configuration = {
+      headers: {
+        "Content-Type": "application/json", //indicamos que es de tipo JSON
+        Authorization: `Bearer ${token}` //usamos bearer token
+      }
+    }
+
+    try {
+      const url = 'http://localhost:4000/api/clientes/cambiar-password'; //mandamos get para obtener perfil
+      const {data} = await axios.put(url, credentials ,configuration);
+      console.log(data);
+      return {
+        msg: "actualizado correctamente",
+        error: false
+      }
+    } catch (error) {
+      return {
+        msg: error.response.data.msg,
+        error: true
+      }
+    }
+  }
   
   return (
-    <Context.Provider value={{auth, setAuth, loading, logOut, updateProfile}}>
+    <Context.Provider value={{auth, setAuth, loading, logOut, updateProfile, updatePassword}}>
         {children}
     </Context.Provider>
   )

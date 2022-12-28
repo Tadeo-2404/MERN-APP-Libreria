@@ -14,7 +14,6 @@ const Perfil = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { nombre, apellido, telefono, correo } = perfil;
-    event.preventDefault();
     const regName = /^[a-zA-Z ]{2,30}$/;
     const regEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 

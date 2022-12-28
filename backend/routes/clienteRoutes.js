@@ -1,5 +1,5 @@
 import express from 'express'
-import { registrar, perfil, iniciarSesion, confirmarCuenta, olvidePassword, comprobarToken, nuevoPassword, actualizarPerfil } from '../controllers/clienteController.js';
+import { registrar, perfil, iniciarSesion, confirmarCuenta, olvidePassword, comprobarToken, nuevoPassword, actualizarPerfil, actualizarPassword } from '../controllers/clienteController.js';
 const router = express.Router();
 import authenticateToken from '../middleware/auth.js';
 
@@ -14,5 +14,6 @@ router.post('/olvide-password/:token', nuevoPassword);
 //privado
 router.get('/perfil', authenticateToken ,perfil);
 router.put('/perfil/:id', authenticateToken, actualizarPerfil);
+router.put('/cambiar-password', authenticateToken, actualizarPassword);
 
 export default router;

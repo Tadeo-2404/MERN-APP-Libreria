@@ -158,6 +158,26 @@ const actualizarPerfil = async (req, res) => {
     }
 }
 
+const actualizarPassword = async (req, res) => {
+    const {id} = req.cliente;
+    const {password_actual, password_nuevo} = req.body;
+
+    const existe =  await Cliente.findOne({id: id});
+    if(!existe) {
+        const error = new Error("cliente no encontrado");
+        return res.status(400).json({msg: error.message});
+    }
+
+    if(await existe.comparePassword(password_actual)) {
+        existe.password = password_nuevo;
+        await existe.save();
+        res.json({msg: "se ha cambiado el password correctamente"})
+    } else {
+        const error = new Error("contraseña incorrecta, intenta de nuevo");
+        return res.status(400).json({msg: error.message})
+    }
+}
+
 export {
     registrar,
     perfil,
@@ -166,5 +186,6 @@ export {
     olvidePassword,
     nuevoPassword,
     comprobarToken,
-    actualizarPerfil
+    actualizarPerfil,
+    actualizarPassword
 }
