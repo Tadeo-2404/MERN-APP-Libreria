@@ -15,6 +15,7 @@ import Perfil from "./components/Perfil";
 import Admin from "./components/Admin";
 import ContextProvider from "./context/ContextProvider";
 import { ContextProviderLibros } from "./context/ContextProviderLibros";
+import CambiarPaswwordPerfil from "./components/CambiarPaswwordPerfil";
 
 function App() {
   return (
@@ -29,7 +30,6 @@ function App() {
                 path="confirmar-cuenta/:token"
                 element={<ConfirmarCuenta />}
               />
-              <Route path="perfil" element={<Perfil />} />
               <Route path="olvide-password" element={<OlvidePassword />} />
               <Route
                 path="olvide-password/:token"
@@ -37,8 +37,11 @@ function App() {
               />
               <Route path="*" element={<Error404 />} />
             </Route>
+
             <Route path="/admin" element={<TemplateLayoutAdmin />}>
               <Route index element={<Admin />} />
+              <Route path="perfil" element={<Perfil />} />
+              <Route path="cambiar-password" element={<CambiarPaswwordPerfil />} />
               <Route path="*" element={<Error404 />} />
             </Route>
           </Routes>

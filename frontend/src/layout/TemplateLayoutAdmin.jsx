@@ -26,8 +26,13 @@ const TemplateLayoutAdmin = () => {
         </div>
         <div>
           <nav className="flex justify-around w-full gap-x-8">
-            <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1">mis libros <RiBookLine/></button>
-            <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1">mi perfil <RiUserLine/></button>
+            <Link to="/admin/mis-libros">
+               <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1">mis libros    <RiBookLine/></button>
+            </Link>
+
+            <Link to="/admin/perfil">
+              <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1">mi perfil <RiUserLine/></button>
+            </Link>
             <button className="font-bold capitalize text-white text-xl flex justify-between items-center gap-x-2 hover:underline hover:transform hover:-translate-y-1" onClick={logOut}>salir <RiLogoutBoxRLine/> </button>
           </nav>
         </div>
